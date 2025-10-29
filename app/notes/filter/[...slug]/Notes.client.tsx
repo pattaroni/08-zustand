@@ -9,12 +9,10 @@ import Pagination from "@/components/Pagination/Pagination";
 import Loader from "@/components/Loader/Loader";
 import ErrorMessage from "@/components/ErrorMessage/ErrorMessage";
 import NoteList from "@/components/NoteList/NoteList";
-import Modal from "@/components/Modal/Modal";
-import NoteForm from "@/components/NoteForm/NoteForm";
+import Link from "next/link";
 
 function Notes({ initialCategory = "" }: { initialCategory?: string }) {
   const [query, setQuery] = useState("");
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [category, setCategory] = useState(initialCategory);
 
@@ -51,21 +49,15 @@ function Notes({ initialCategory = "" }: { initialCategory?: string }) {
           />
         )}
 
-        <button className={css.button} onClick={() => setIsModalOpen(true)}>
+        <Link href={"/notes/action/create"} className={css.button}>
           Create note +
-        </button>
+        </Link>
       </section>
       {isLoading && <Loader>Loading notes, please wait...</Loader>}
       {data && data.notes.length === 0 && (
         <ErrorMessage>Not Found!</ErrorMessage>
       )}
       {data && data.notes.length > 0 && <NoteList notes={data.notes} />}
-
-      {isModalOpen && (
-        <Modal onClose={() => setIsModalOpen(false)}>
-          <NoteForm onClose={() => setIsModalOpen(false)} />
-        </Modal>
-      )}
     </div>
   );
 }

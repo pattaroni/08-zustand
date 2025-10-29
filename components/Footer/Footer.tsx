@@ -9,9 +9,9 @@ export default function Footer() {
         <div className={css.wrap}>
           <p>Developer: Oleksii Kyryk</p>
           <p>
-            Contact us:
+            Contact us:&nbsp;
             <Link href="mailto:kirikoleksiy112@gmail.com">
-              &nbsp;kirikoleksiy112@gmail.com
+              kirikoleksiy112@gmail.com
             </Link>
           </p>
         </div>
@@ -19,4 +19,3 @@ export default function Footer() {
     </footer>
   );
 }
-// Team Building Activities
