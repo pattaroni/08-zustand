@@ -6,6 +6,7 @@ import {
 } from "@tanstack/react-query";
 import Notes from "./Notes.client";
 import { Metadata } from "next";
+import { notFound } from "next/navigation";
 
 type Props = {
   params: Promise<{ slug: string[] }>;
@@ -46,6 +47,18 @@ async function NotesByCategory({ params }: Props) {
     slug[0] === "all" ? "" : slug[0].charAt(0).toUpperCase() + slug[0].slice(1);
   const page = 1;
   const queryClient = new QueryClient();
+
+  const validCategories = [
+    "",
+    "Work",
+    "Personal",
+    "Meeting",
+    "Shopping",
+    "Todo",
+  ];
+  if (!validCategories.includes(category)) {
+    notFound();
+  }
 
   await queryClient.prefetchQuery({
     queryKey: ["notes", "", page, category],
