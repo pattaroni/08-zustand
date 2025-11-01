@@ -1,9 +1,6 @@
-"use client";
-
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 import css from "./Home.module.css";
 import { Metadata } from "next";
+import NotFoundClient from "./NotFound.client";
 
 export const metadata: Metadata = {
   title: `Not Found`,
@@ -35,13 +32,6 @@ export const metadata: Metadata = {
 };
 
 function NotFound() {
-  const router = useRouter();
-
-  useEffect(() => {
-    const timer = setTimeout(() => router.push("/"), 3000);
-    return () => clearTimeout(timer);
-  }, [router]);
-
   return (
     <>
       <main>
@@ -49,6 +39,7 @@ function NotFound() {
         <p className={css.description}>
           Sorry, the page you are looking for does not exist.
         </p>
+        <NotFoundClient />
       </main>
     </>
   );

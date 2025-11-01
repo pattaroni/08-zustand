@@ -14,6 +14,21 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
+  const category =
+    slug[0] === "all" ? "" : slug[0].charAt(0).toUpperCase() + slug[0].slice(1);
+
+  const validCategories = [
+    "",
+    "Work",
+    "Personal",
+    "Meeting",
+    "Shopping",
+    "Todo",
+  ];
+  if (!validCategories.includes(category)) {
+    notFound();
+  }
+
   return {
     title: `Notes: ${slug[0] === "all" ? "All" : slug[0]}`,
     description: `Notes from the "${slug[0] === "all" ? "All" : slug[0]}" category.`,
@@ -47,18 +62,6 @@ async function NotesByCategory({ params }: Props) {
     slug[0] === "all" ? "" : slug[0].charAt(0).toUpperCase() + slug[0].slice(1);
   const page = 1;
   const queryClient = new QueryClient();
-
-  const validCategories = [
-    "",
-    "Work",
-    "Personal",
-    "Meeting",
-    "Shopping",
-    "Todo",
-  ];
-  if (!validCategories.includes(category)) {
-    notFound();
-  }
 
   await queryClient.prefetchQuery({
     queryKey: ["notes", "", page, category],
