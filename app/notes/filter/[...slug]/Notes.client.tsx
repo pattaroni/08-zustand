@@ -1,4 +1,5 @@
 "use client";
+
 import SearchBox from "@/components/SearchBox/SearchBox";
 import { ApiNotesResponse, fetchNotes } from "@/lib/api";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
@@ -11,15 +12,13 @@ import ErrorMessage from "@/components/ErrorMessage/ErrorMessage";
 import NoteList from "@/components/NoteList/NoteList";
 import Link from "next/link";
 
-function Notes({ initialCategory = "" }: { initialCategory?: string }) {
+function Notes({ tag = "" }: { tag?: string }) {
   const [query, setQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [category, setCategory] = useState(initialCategory);
 
   useEffect(() => {
-    setCategory(initialCategory);
     setCurrentPage(1);
-  }, [initialCategory]);
+  }, [tag]);
 
   const debouncedSearch = useDebouncedCallback((value: string) => {
     setQuery(value);
@@ -28,8 +27,8 @@ function Notes({ initialCategory = "" }: { initialCategory?: string }) {
 
   const { data, isError, isLoading, isSuccess, error } =
     useQuery<ApiNotesResponse>({
-      queryKey: ["notes", query, currentPage, category],
-      queryFn: () => fetchNotes(query, currentPage, category),
+      queryKey: ["notes", query, currentPage, tag],
+      queryFn: () => fetchNotes(query, currentPage, tag),
       placeholderData: currentPage > 1 ? keepPreviousData : undefined,
     });
   const totalPages = data?.totalPages ?? 0;

@@ -6,12 +6,15 @@ import {
 import { fetchSingleNote } from "@/lib/api";
 import NoteDetailsClient from "./NoteDetails.client";
 import { notFound } from "next/navigation";
+import { Metadata } from "next";
 
 type NoteDetailsProps = {
   params: Promise<{ id: string }>;
 };
 
-export async function generateMetadata({ params }: NoteDetailsProps) {
+export async function generateMetadata({
+  params,
+}: NoteDetailsProps): Promise<Metadata> {
   const { id } = await params;
   const note = await fetchSingleNote(id);
 

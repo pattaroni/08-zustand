@@ -70,7 +70,7 @@ async function NotesByCategory({ params }: Props) {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <Notes initialCategory={category} />
+      <Notes tag={category} />
     </HydrationBoundary>
   );
 }
